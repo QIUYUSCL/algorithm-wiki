@@ -26,16 +26,25 @@ function generateSidebar(folderName: string, title: string) {
         .map(file => {
           const name = file.replace('.md', '')
           return {
-            text: name, // 直接用文件名作为标题
-            link: `/${folderName}/${dir}/${name}`
+            text: name,
+            link: `/${folderName}/${dir}/${name}`,
+            name: name // 临时存一下原始文件名，后面用来判断
           }
         })
 
-    // 只有当文件夹里有 .md 文件时才显示这个分组
+    // 1. 检查是否有 index.md
+    const hasIndex = subFiles.some(item => item.name === 'index')
+
+    // 2. 过滤掉 index，不让它出现在子菜单里
+    const visibleFiles = subFiles.filter(item => item.name !== 'index')
+
     if (subFiles.length > 0) {
       items.push({
-        text: dir, // 文件夹名作为组名
-        items: subFiles
+        text: dir, // 组名 (例如 C++)
+        // 🟢 关键点：如果有 index.md，点击组名直接跳转！
+        link: hasIndex ? `/${folderName}/${dir}/` : undefined,
+        items: visibleFiles,
+        collapsed: false // 默认展开
       })
     }
   }
@@ -68,6 +77,10 @@ export default defineConfig({
   title: "Scl's CS Wiki",
   description: "全栈开发、算法与人工智能学习笔记",
   lastUpdated: true,
+  ignoreDeadLinks: true,
+  head: [
+    ['link', { rel: 'icon', href: '/logo.png' }]
+  ],
 
   // Markdown 配置 (支持数学公式)
   markdown: {
@@ -77,6 +90,11 @@ export default defineConfig({
   },
 
   themeConfig: {
+
+    // 👇【新增 2】设置左上角导航栏 Logo
+    logo: '/logo.png',
+
+
     // 2. 顶部导航栏 (Navbar)
     // 注意：这里的 link 需要指向你实际存在的某个 md 文件，否则点击会 404
     nav: [
