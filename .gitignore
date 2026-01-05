@@ -1,0 +1,15 @@
+# 忽略依赖包 (这个最重要，体积巨大)
+node_modules/
+
+# 忽略 VitePress 构建产物
+.vitepress/dist/
+
+# 忽略 VitePress 缓存 (就是报错的那个文件夹)
+.vitepress/cache/
+
+# 忽略系统生成的垃圾文件
+.DS_Store
+Thumbs.db
+
+# 忽略日志
+*.log
