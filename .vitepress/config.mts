@@ -81,10 +81,10 @@ export default defineConfig({
     // 注意：这里的 link 需要指向你实际存在的某个 md 文件，否则点击会 404
     nav: [
       { text: '🏠 首页', link: '/' },
-      { text: '💻 编程语言', link: '/lang/cpp-basic', activeMatch: '/lang/' },
-      { text: '⚔️ 算法知识', link: '/algo/STL', activeMatch: '/algo/' },
-      { text: '🐛 经典题目', link: '/leetcode/common-traps', activeMatch: '/leetcode/' },
-      { text: '🤖 人工智能', link: '/ai/MachineLearning', activeMatch: '/ai/' },
+      { text: '💻 编程语言', link: '/lang/', activeMatch: '/lang/' },
+      { text: '⚔️ 算法知识', link: '/algo/', activeMatch: '/algo/' },
+      { text: '🐛 经典题目', link: '/leetcode/', activeMatch: '/leetcode/' },
+      { text: '🤖 人工智能', link: '/ai/', activeMatch: '/ai/' },
       {
         text: '🔗 我的项目',
         items: [
