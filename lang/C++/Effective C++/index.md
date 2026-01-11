@@ -11,11 +11,11 @@
 
 ### 第一章：让自己习惯 C++ (Accustoming Yourself to C++)
 * [条款01：视C++为一个语言联邦](条款01：视C++为一个语言联邦.md)
-* [条款 02：尽量以 const, enum, inline 替换 define](条款%2002：尽量以%20const,%20enum,%20inline%20替换%20define.md)
-* 
+* [条款02：尽量以 const, enum, inline 替换 define](条款02：尽量以%20const,%20enum,%20inline%20替换%20define.md)
+* [条款03：尽可能使用 const](条款03：尽可能使用%20const.md)
 
 ### 第二章：构造/析构/赋值运算 (Constructors, Destructors, and Assignment Operators)
-* [Item 05: 了解 C++ 默默编写并调用了哪些函数](/effective-cpp/item05)
+* [Item 05: 了解 C++ 默默编写并调用了哪些函数]()
 * ... (待补充)
 
 ---
