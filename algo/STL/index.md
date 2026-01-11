@@ -4,8 +4,9 @@
   
 ## 📜 文章列表  
   
+- [Vector](Vector.md)
 - [Map 与红黑树底层原理](./Map_底层红黑树.md)  
-- [Vector 扩容机制 (待更)](./Vector.md)  
+-  
 - 链表
 - [Deque 双端队列 (待更)](./Deque.md)  
 - 1
