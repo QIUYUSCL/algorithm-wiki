@@ -1,58 +1,93 @@
 import { defineConfig } from 'vitepress'
 import mathjax3 from 'markdown-it-mathjax3'
+// @ts-ignore
 import fs from 'fs'
+// @ts-ignore
 import path from 'path'
 
+// [!code focus:4]
 // -------------------------------------------------------------------------
-// 🤖 自动生成侧边栏的魔法函数
+// 🤖 自动生成侧边栏的魔法函数 (升级版：支持二级目录)
 // -------------------------------------------------------------------------
 function generateSidebar(folderName: string, title: string) {
   const dirPath = path.resolve(__dirname, '../' + folderName)
   const items: any[] = []
 
-  // 如果文件夹不存在，直接返回空数组，防止报错
+  //HB 如果文件夹不存在，直接返回空数组
   if (!fs.existsSync(dirPath)) return []
 
-  // 1. 先找子文件夹 (作为侧边栏的分组 Group)
-  // 例如：algo/STL源码剖析/ -> 标题就是 "STL源码剖析"
+  // 1. 扫描一级子文件夹 (例如: lang/C++, lang/Python)
   const dirs = fs.readdirSync(dirPath, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name)
 
   for (const dir of dirs) {
     const subDirPath = path.resolve(dirPath, dir)
-    const subFiles = fs.readdirSync(subDirPath)
-        .filter(file => file.endsWith('.md'))
-        .map(file => {
-          const name = file.replace('.md', '')
+    const sectionItems: any[] = []
+
+    // 🅰️ 扫描当前目录下的 .md 文件 (例如: lang/C++/智能指针.md)
+    const files = fs.readdirSync(subDirPath, { withFileTypes: true })
+        .filter(dirent => !dirent.isDirectory() && dirent.name.endsWith('.md'))
+        .map(dirent => {
+          const name = dirent.name.replace('.md', '')
           return {
             text: name,
             link: `/${folderName}/${dir}/${name}`,
-            name: name // 临时存一下原始文件名，后面用来判断
+            name: name
           }
         })
 
-    // 1. 检查是否有 index.md
-    const hasIndex = subFiles.some(item => item.name === 'index')
+    // 🅱️ 扫描二级子文件夹 (🔥 新增逻辑: 例如 lang/C++/C++ Primer)
+    const subDirs = fs.readdirSync(subDirPath, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory())
+        .map(dirent => dirent.name)
 
-    // 2. 过滤掉 index，不让它出现在子菜单里
-    const visibleFiles = subFiles.filter(item => item.name !== 'index')
+    for (const subDir of subDirs) {
+      const deepDirPath = path.resolve(subDirPath, subDir)
+      const deepFiles = fs.readdirSync(deepDirPath)
+          .filter(file => file.endsWith('.md'))
+          .map(file => {
+            const name = file.replace('.md', '')
+            return {
+              text: name,
+              link: `/${folderName}/${dir}/${subDir}/${name}`,
+              name: name
+            }
+          })
 
-    if (subFiles.length > 0) {
+      const hasIndex = deepFiles.some(kf => kf.name === 'index');
+      const visibleFiles = deepFiles.filter(f => f.name !== 'index')
+
+      if (deepFiles.length > 0) {
+        sectionItems.push({
+          text: subDir, // 显示 "C++ Primer"
+          link: hasIndex ? `/${folderName}/${dir}/${subDir}/` : undefined,
+          items: visibleFiles,
+          collapsed: true // 默认折QF
+        })
+      }
+    }
+
+    // 🟢 合并：把散文件(如智能指针)和子文件夹(如C++ Primer)放到一起
+    const visibleRootFiles = files.filter(f => f.name !== 'index')
+    sectionItems.push(...visibleRootFiles)
+
+    // 检查一级目录是否有 index.md
+    const hasRootIndex = files.some(f => f.name === 'index')
+
+    if (sectionItems.length > 0) {
       items.push({
         text: dir, // 组名 (例如 C++)
-        // 🟢 关键点：如果有 index.md，点击组名直接跳转！
-        link: hasIndex ? `/${folderName}/${dir}/` : undefined,
-        items: visibleFiles,
-        collapsed: false // 默认展开
+        link: hasRootIndex ? `/${folderName}/${dir}/` : undefined,
+        items: sectionItems,
+        collapsed: false
       })
     }
   }
 
-  // 2. 再找当前目录下的散乱 .md 文件 (作为默认分组)
-  // 例如：algo/二分查找.md -> 归类到 "算法杂项" (即传入的 title)
-  const files = fs.readdirSync(dirPath)
-      .filter(file => file.endsWith('.md') && !file.toLowerCase().includes('index')) // 排除 index.md
+  // 2. 处理根目录下的散乱文件 (保持不变)
+  const rootFiles = fs.readdirSync(dirPath)
+      .filter(file => file.endsWith('.md') && !file.toLowerCase().includes('index'))
       .map(file => {
         const name = file.replace('.md', '')
         return {
@@ -61,15 +96,17 @@ function generateSidebar(folderName: string, title: string) {
         }
       })
 
-  if (files.length > 0) {
+  if (rootFiles.length > 0) {
     items.push({
       text: title,
-      items: files
+      items: rootFiles
     })
   }
 
   return items
 }
+
+
 // -------------------------------------------------------------------------
 
 export default defineConfig({
