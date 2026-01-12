@@ -139,10 +139,11 @@ export default defineConfig({
       { text: '💻 编程语言', link: '/lang/', activeMatch: '/lang/' },
       { text: '⚔️ 算法知识', link: '/algo/', activeMatch: '/algo/' },
       { text: '🐛 经典题目', link: '/leetcode/', activeMatch: '/leetcode/' },
-      { text: '🤖 人工智能', link: '/ai/', activeMatch: '/ai/' },
+      { text: '🧠 问题八股', link: '/problems/', activeMatch: '/problems/' },
       {
-        text: '🔗 我的项目',
+        text: '🔗 其他',
         items: [
+          { text: '🤖 人工智能', link: '/ai/', activeMatch: '/ai/' },
           { text: '📅 100天计划', link: 'https://plan.testscl.xyz' },
           { text: '📝 刷题日记', link: 'https://diary.testscl.xyz' }
         ]
@@ -162,6 +163,8 @@ export default defineConfig({
       '/algo/': generateSidebar('algo', '算法杂项'),
       '/ai/': generateSidebar('ai', 'AI 笔记'),
       '/leetcode/': generateSidebar('leetcode', 'LeetCode 题解'),
+      // ✨ 新增：自动生成 problems 文件夹的侧边栏
+      '/problems/': generateSidebar('problems', '面试八股'),
     },
 
     // 社交链接

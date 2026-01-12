@@ -28,7 +28,7 @@
 
 ```cpp
 string s1;            // 默认初始化，空字符串
-string s2 = s1;       // 拷贝初始化
+string s2 = s1;       // 拷贝初始化，使用等号
 string s3 = "hiya";   // 拷贝初始化
 string s4(10, 'c');   // 直接初始化，s4 内容为 "cccccccccc"
 ```
