@@ -31,6 +31,7 @@ FOLDER_MAPPING = {
     "lang": "lang",
     "ai": "ai",
     "leetcode": "leetcode",
+    "problems": "problems",
 }
 
 # 4. 图片资源文件夹
