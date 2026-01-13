@@ -128,4 +128,4 @@ $$2(a + b) = a + b + n(b + c)$$
 
 
 
-<CycleAnimation />
+<LC142CycleAnimation />

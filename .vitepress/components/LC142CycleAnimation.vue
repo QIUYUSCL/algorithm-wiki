@@ -229,7 +229,7 @@ const handleAction = () => {
   animation: runP1 3s linear forwards;
 }
 .rabbit.status-2 {
-  offset-path: path("M 20 100 L 140 100 A 60 60 0 1 1 140 100 A 60 60 0 1 1 235 149");
+  offset-path: path("M 20 100 L 140 100 A 60 60 0 1 1 260 100 A 60 60 0 1 1 140 100 A 60 60 0 1 1 235 149");
   offset-distance: 100%;
 }
 /* Reset: 兔子原地不动 */
