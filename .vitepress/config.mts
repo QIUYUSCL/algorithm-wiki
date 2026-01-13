@@ -5,6 +5,8 @@ import fs from 'fs'
 // @ts-ignore
 import path from 'path'
 
+import { withMermaid } from 'vitepress-plugin-mermaid'
+
 // [!code focus:4]
 // -------------------------------------------------------------------------
 // 🤖 自动生成侧边栏的魔法函数 (升级版：支持二级目录)
@@ -109,7 +111,7 @@ function generateSidebar(folderName: string, title: string) {
 
 // -------------------------------------------------------------------------
 
-export default defineConfig({
+export default withMermaid({
   // 1. 网站元数据
   title: "Scl's CS Wiki",
   description: "全栈开发、算法与人工智能学习笔记",
