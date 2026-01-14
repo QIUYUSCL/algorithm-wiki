@@ -1,5 +1,4 @@
 
-# Vector 
 
 ## **1. Vector 的本质**
 - **定义**：Vector 是一个**动态数组**（Dynamic Array）。
