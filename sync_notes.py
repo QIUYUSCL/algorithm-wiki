@@ -16,7 +16,7 @@ if current_os == "Windows":
 
 elif current_os == "Linux":
     # Ubuntu 路径配置
-    OBSIDIAN_PUBLIC_DIR = "/home/scl/文档/笔记/Public"
+    OBSIDIAN_PUBLIC_DIR = "/home/scl/Document/笔记/Public"
     VITEPRESS_ROOT = "/home/scl/桌面/vue/algorithm-wiki"
     print("🐧 检测到运行环境: Linux (Ubuntu)")
 
